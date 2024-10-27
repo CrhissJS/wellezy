@@ -19,7 +19,7 @@ return [
     
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://wellezy-front.vercel.app/','http://localhost:5173','https://web-production-8f66.up.railway.app','http://127.0.0.1:5173'],
+    'allowed_origins' => ['https://wellezy-front.vercel.app','http://localhost:5173','https://web-production-8f66.up.railway.app','http://127.0.0.1:5173'],
 
     'allowed_origins_patterns' => [],
 
