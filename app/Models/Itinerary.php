@@ -5,6 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @OA\Schema(
+ *     schema="Itinerary",
+ *     @OA\Property(property="departure_city", type="string"),
+ *     @OA\Property(property="arrival_city", type="string"),
+ *     @OA\Property(property="departure_date", type="string", format="date"),
+ *     @OA\Property(property="arrival_date", type="string", format="date"),
+ *     @OA\Property(property="departure_time", type="string", format="time"),
+ *     @OA\Property(property="arrival_time", type="string", format="time"),
+ *     @OA\Property(property="flight_number", type="string"),
+ *     @OA\Property(property="marketing_carrier", type="string")
+ * )
+ */
+
 class Itinerary extends Model
 {
     protected $fillable = [

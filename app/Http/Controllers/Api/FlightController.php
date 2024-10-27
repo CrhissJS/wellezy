@@ -17,6 +17,30 @@ class FlightController extends Controller
         $this->parameterValidator = app('parameterValidator');
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/airports",
+     *     summary="Get airport suggestions based on IATA code",
+     *     tags={"Flights"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"code"},
+     *             @OA\Property(property="code", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Airport suggestions",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="airports", type="array", @OA\Items(type="object")),
+     *             @OA\Property(property="cities", type="array", @OA\Items(type="object"))
+     *         )
+     *     ),
+     *     @OA\Response(response=400, description="Missing parameters"),
+     *     @OA\Response(response=500, description="Error fetching airports")
+     * )
+     */
     public function airports(Request $request): JsonResponse
     {
         $requiredParams = ['code'];
@@ -39,6 +63,43 @@ class FlightController extends Controller
         }
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/flights",
+     *     summary="Search for flights",
+     *     tags={"Flights"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"direct", "currency", "searchs", "class", "qtyPassengers", "adult", "child", "baby"},
+     *             @OA\Property(property="direct", type="boolean"),
+     *             @OA\Property(property="currency", type="string"),
+     *             @OA\Property(property="searchs", type="integer"),
+     *             @OA\Property(property="class", type="boolean"),
+     *             @OA\Property(property="qtyPassengers", type="integer"),
+     *             @OA\Property(property="adult", type="integer"),
+     *             @OA\Property(property="child", type="integer"),
+     *             @OA\Property(property="baby", type="integer"),
+     *             @OA\Property(property="seat", type="integer"),
+     *             @OA\Property(property="itinerary", type="array", @OA\Items(type="object",
+     *                 @OA\Property(property="departureCity", type="string"),
+     *                 @OA\Property(property="arrivalCity", type="string"),
+     *                 @OA\Property(property="hour", type="string", format="date-time")
+     *             ))
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Flight search results",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer"),
+     *             @OA\Property(property="data", type="object")
+     *         )
+     *     ),
+     *     @OA\Response(response=400, description="Missing parameters"),
+     *     @OA\Response(response=500, description="Error fetching flights")
+     * )
+     */
     public function flights(Request $request): JsonResponse
     {
         $requiredParams = ['direct', 'currency', 'searchs', 'class', 'qtyPassengers', 'adult', 'child', 'baby', 'seat'];

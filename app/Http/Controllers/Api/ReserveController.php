@@ -15,6 +15,48 @@ class ReserveController extends Controller
         $this->parameterValidator = app('parameterValidator');
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/reserves",
+     *     summary="Create a new reservation",
+     *     tags={"Reservations"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name", "email", "passenger_count", "adult_count", "child_count", "baby_count", "total_amount", "currency"},
+     *             @OA\Property(property="name", type="string"),
+     *             @OA\Property(property="email", type="string", format="email"),
+     *             @OA\Property(property="passenger_count", type="integer"),
+     *             @OA\Property(property="adult_count", type="integer"),
+     *             @OA\Property(property="child_count", type="integer"),
+     *             @OA\Property(property="baby_count", type="integer"),
+     *             @OA\Property(property="total_amount", type="number", format="float"),
+     *             @OA\Property(property="currency", type="string"),
+     *             @OA\Property(property="itineraries", type="array", @OA\Items(type="object",
+     *                 @OA\Property(property="departure_city", type="string"),
+     *                 @OA\Property(property="arrival_city", type="string"),
+     *                 @OA\Property(property="departure_date", type="string", format="date"),
+     *                 @OA\Property(property="arrival_date", type="string", format="date"),
+     *                 @OA\Property(property="departure_time", type="string"),
+     *                 @OA\Property(property="arrival_time", type="string"),
+     *                 @OA\Property(property="flight_number", type="string"),
+     *                 @OA\Property(property="marketing_carrier", type="string")
+     *             ))
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Reservation created successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string"),
+     *             @OA\Property(property="data", type="object")
+     *         )
+     *     ),
+     *     @OA\Response(response=400, description="Missing parameters"),
+     *     @OA\Response(response=401, description="Authentication needed"),
+     *     @OA\Response(response=500, description="Error creating reserve")
+     * )
+     */
     public function store(Request $request): JsonResponse
     {
         $requiredParams = ['name', 'email', 'passenger_count', 'adult_count', 'child_count', 'baby_count', 'total_amount', 'currency'];

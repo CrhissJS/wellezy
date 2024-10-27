@@ -1,0 +1,443 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Reservas de Vuelos",
+        "description": "API documentation for the flight reservation project.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Local server"
+        },
+        {
+            "url": "https://web-production-8f66.up.railway.app",
+            "description": "Production server"
+        }
+    ],
+    "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register a new user",
+                "operationId": "8e4e3cb7b46126f4696379d3c7eeb4ad",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User registered successfully"
+                    },
+                    "400": {
+                        "description": "Missing parameters"
+                    },
+                    "500": {
+                        "description": "Failed to register user"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User login",
+                "operationId": "222b2625838e3c57e017987f73598fda",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string"
+                                        },
+                                        "token_type": {
+                                            "type": "string"
+                                        },
+                                        "user_data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Missing parameters"
+                    },
+                    "401": {
+                        "description": "Incorrect credentials"
+                    }
+                }
+            }
+        },
+        "/api/airports": {
+            "post": {
+                "tags": [
+                    "Flights"
+                ],
+                "summary": "Get airport suggestions based on IATA code",
+                "operationId": "e4a2294b1e717b90b401e67599ffa9ee",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Airport suggestions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "airports": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "cities": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Missing parameters"
+                    },
+                    "500": {
+                        "description": "Error fetching airports"
+                    }
+                }
+            }
+        },
+        "/api/flights": {
+            "post": {
+                "tags": [
+                    "Flights"
+                ],
+                "summary": "Search for flights",
+                "operationId": "23623e998af3723ddff8fcc17aa1efbd",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "direct",
+                                    "currency",
+                                    "searchs",
+                                    "class",
+                                    "qtyPassengers",
+                                    "adult",
+                                    "child",
+                                    "baby"
+                                ],
+                                "properties": {
+                                    "direct": {
+                                        "type": "boolean"
+                                    },
+                                    "currency": {
+                                        "type": "string"
+                                    },
+                                    "searchs": {
+                                        "type": "integer"
+                                    },
+                                    "class": {
+                                        "type": "boolean"
+                                    },
+                                    "qtyPassengers": {
+                                        "type": "integer"
+                                    },
+                                    "adult": {
+                                        "type": "integer"
+                                    },
+                                    "child": {
+                                        "type": "integer"
+                                    },
+                                    "baby": {
+                                        "type": "integer"
+                                    },
+                                    "seat": {
+                                        "type": "integer"
+                                    },
+                                    "itinerary": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "departureCity": {
+                                                    "type": "string"
+                                                },
+                                                "arrivalCity": {
+                                                    "type": "string"
+                                                },
+                                                "hour": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Flight search results",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Missing parameters"
+                    },
+                    "500": {
+                        "description": "Error fetching flights"
+                    }
+                }
+            }
+        },
+        "/api/reserves": {
+            "post": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Create a new reservation",
+                "operationId": "b87d19f54deaace66d672515587ceb5c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "passenger_count",
+                                    "adult_count",
+                                    "child_count",
+                                    "baby_count",
+                                    "total_amount",
+                                    "currency"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "passenger_count": {
+                                        "type": "integer"
+                                    },
+                                    "adult_count": {
+                                        "type": "integer"
+                                    },
+                                    "child_count": {
+                                        "type": "integer"
+                                    },
+                                    "baby_count": {
+                                        "type": "integer"
+                                    },
+                                    "total_amount": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "currency": {
+                                        "type": "string"
+                                    },
+                                    "itineraries": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "departure_city": {
+                                                    "type": "string"
+                                                },
+                                                "arrival_city": {
+                                                    "type": "string"
+                                                },
+                                                "departure_date": {
+                                                    "type": "string",
+                                                    "format": "date"
+                                                },
+                                                "arrival_date": {
+                                                    "type": "string",
+                                                    "format": "date"
+                                                },
+                                                "departure_time": {
+                                                    "type": "string"
+                                                },
+                                                "arrival_time": {
+                                                    "type": "string"
+                                                },
+                                                "flight_number": {
+                                                    "type": "string"
+                                                },
+                                                "marketing_carrier": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Reservation created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Missing parameters"
+                    },
+                    "401": {
+                        "description": "Authentication needed"
+                    },
+                    "500": {
+                        "description": "Error creating reserve"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "Authorization": {
+                "type": "http",
+                "description": "Autenticación mediante Laravel Sanctum (Authorization Bearer token)",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        },
+        {
+            "name": "Flights",
+            "description": "Flights"
+        },
+        {
+            "name": "Reservations",
+            "description": "Reservations"
+        }
+    ]
+}
