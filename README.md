@@ -16,7 +16,7 @@ Wellezy Travel Backend is a platform to find and book flights depending on the d
 
 -   PHP >= 8.2
 -   Compositor
--   MySQL/PostgreSQL
+-   MySQL/PostgreSQL (Previously created Database)
 -   Laravel 11.x
 
 ## Installation
